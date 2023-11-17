@@ -162,7 +162,7 @@ class ColumnParallelLinear(torch.nn.Module):
         self.output_size_per_partition = divide(output_size, tp_size)
         self.skip_bias_add = skip_bias_add
         if params_dtype is None:
-            params_dtype = torch.get_default_dtype()
+            params_dtype = torch.float16 # modified for peft
         self.params_dtype = params_dtype
         if linear_method is None:
             linear_method = UnquantizedLinearMethod()
@@ -470,7 +470,7 @@ class RowParallelLinear(torch.nn.Module):
         self.input_is_parallel = input_is_parallel
         self.reduce_results = reduce_results
         if params_dtype is None:
-            params_dtype = torch.get_default_dtype()
+            params_dtype = torch.float16 # modified for peft
         self.params_dtype = params_dtype
 
         # Divide the weight matrix along the last dimension.
